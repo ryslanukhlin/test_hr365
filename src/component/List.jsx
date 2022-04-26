@@ -1,8 +1,53 @@
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Table } from 'antd';
-import { requestAdress } from '../store/adress/adressReducer';
+import { Table, Select } from 'antd';
+import { requestAdress, setAdressName } from '../store/adress/adressReducer';
+import { requestAdressData } from '../store/adress/adressRequest';
 
 import '../style/List.css';
+
+const SelectAdresses = ({ aplication, start }) => {
+    const dispatch = useDispatch();
+    const [error, setError] = useState();
+    const [loading, setLoading] = useState(true);
+    const [list, setList] = useState();
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const list = await requestAdressData(
+                    start
+                        ? [aplication.startX, aplication.startY]
+                        : [aplication.endX, aplication.endY],
+                );
+                setList(list);
+            } catch (e) {
+                setError(e.message);
+            }
+            setLoading(false);
+        })();
+    }, []);
+
+    const onChangeAdressName = (adress) => {
+        dispatch(setAdressName(adress, start, aplication.key));
+    };
+
+    if (error) return <div>{start ? aplication.from : aplication.where}</div>;
+
+    return (
+        !loading && (
+            <Select
+                loading={loading}
+                defaultValue={list[0].full_name}
+                className="select"
+                onChange={onChangeAdressName}>
+                {list.map((option) => (
+                    <Select.Option key={option.id} value={option.full_name} />
+                ))}
+            </Select>
+        )
+    );
+};
 
 const ListAdresses = ({ width }) => {
     const dispatch = useDispatch();
@@ -16,12 +61,12 @@ const ListAdresses = ({ width }) => {
         {
             title: 'Откуда',
             dataIndex: 'from',
-            key: 'from',
+            render: (_, aplication) => <SelectAdresses aplication={aplication} start={true} />,
         },
         {
             title: 'Куда',
             dataIndex: 'where',
-            key: 'where',
+            render: (_, aplication) => <SelectAdresses aplication={aplication} start={false} />,
         },
         {
             title: '',

@@ -21,3 +21,8 @@
 .active_row:hover td {
     background-color: #fafafa !important;
 }
+
+.select {
+    min-width: 150px;
+    width: 100%;
+}

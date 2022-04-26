@@ -24,3 +24,14 @@ export const requestRouteData = async (coordinate) => {
     }
     return routeCoodinateArray;
 };
+
+export const requestAdressData = async (coordinate) => {
+    const response = await fetch(
+        `https://catalog.api.2gis.com/3.0/items/geocode?raduis=40000&type=building&point=${coordinate[1]},${coordinate[0]}&key=ruzojf8309`,
+    );
+    const data = await response.json();
+    if (data.meta.code !== 200) {
+        throw new Error('Загрузить локации не вышло');
+    }
+    return data.result.items;
+};

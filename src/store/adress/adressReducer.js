@@ -36,6 +36,7 @@ export const SET_ADRESS = 'SET_ADRESS';
 export const SET_ACTIVE_INDEX = 'REQUEST_ACTIVE_INDEX';
 export const SET_ADRESS_DOWNLOAD = 'SET_ADRESS_DOWNLOAD';
 export const REQUEST_ADRESS = 'REQUEST_ADRESS';
+export const SET_ADRESNAME = 'SET_ADRESNAME';
 
 const adressReducer = (state = adressStore, action) => {
     switch (action.type) {
@@ -45,6 +46,16 @@ const adressReducer = (state = adressStore, action) => {
             return { ...state, geometry: action.payload };
         case SET_ACTIVE_INDEX:
             return { ...state, activeAplicationIndex: action.payload };
+        case SET_ADRESNAME:
+            return {
+                ...state,
+                applications: state.applications.map((item) => {
+                    if (action.key === item.key)
+                        if (action.start) item.from = action.payload;
+                        else item.where = action.payload;
+                    return item;
+                }),
+            };
         default:
             return state;
     }
@@ -68,6 +79,13 @@ export const setAdressDownload = (download = false) => ({
 export const setActiveIndex = (index) => ({
     type: SET_ACTIVE_INDEX,
     payload: index,
+});
+
+export const setAdressName = (adress, start, key) => ({
+    type: SET_ADRESNAME,
+    payload: adress,
+    start,
+    key,
 });
 
 export default adressReducer;
