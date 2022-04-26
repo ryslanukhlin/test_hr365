@@ -11,7 +11,7 @@ const App = () => {
         active: false,
         x: '',
     });
-    const [width, setWidth] = useState(600);
+    const [width, setWidth] = useState(800);
     const startResize = (e) => {
         setDrag({
             active: true,

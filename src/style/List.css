@@ -13,3 +13,11 @@
 .list__form {
     width: 100%;
 }
+
+.active_row {
+    background-color: #fafafa !important;
+}
+
+.active_row:hover td {
+    background-color: #fafafa !important;
+}
