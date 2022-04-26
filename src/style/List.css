@@ -1,17 +1,5 @@
-.list__item {
-    padding: 10px 30px !important;
-}
-
-.list__item:hover {
-    background-color: #fafafa;
-}
-
-.list__item:active {
-    background-color: #f0f0f0;
-}
-
-.list__form {
-    width: 100%;
+.table {
+    overflow: auto;
 }
 
 .active_row {

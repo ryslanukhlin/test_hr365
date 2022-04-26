@@ -77,12 +77,13 @@ const ListAdresses = ({ width }) => {
 
     return (
         <Table
+            className="table"
             pagination={false}
             bordered
             style={{ width }}
             columns={columns}
             dataSource={applications}
-            rowClassName={(record, index) => (activeAplicationIndex === index ? 'active_row' : '')}
+            rowClassName={(_, index) => (activeAplicationIndex === index ? 'active_row' : '')}
         />
     );
 };

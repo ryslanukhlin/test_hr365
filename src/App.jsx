@@ -25,7 +25,7 @@ const App = () => {
             const xDiff = Math.abs(x - e.clientX);
             const newW = x > e.clientX ? width - xDiff : width + xDiff;
 
-            if (newW <= 400 || newW >= window.innerWidth / 2) {
+            if (newW <= 300 || newW >= window.innerWidth / 1.5) {
                 return stopResize();
             }
             setDrag({ ...drag, x: e.clientX });
